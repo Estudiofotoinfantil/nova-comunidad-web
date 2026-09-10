@@ -1,0 +1,10 @@
+{
+  "name": "Nova Comunidad",
+  "short_name": "Comunidad",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#14110D",
+  "theme_color": "#14110D",
+  "description": "El espacio privado de cada evento — Nova Invite",
+  "icons": []
+}

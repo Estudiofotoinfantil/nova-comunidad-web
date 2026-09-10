@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Nova Comunidad</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#17130E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============ BIENVENIDA ============ -->
+  <section id="screen-welcome" class="screen-full" hidden>
+    <div class="welcome-cover" id="welcomeCover"></div>
+    <div class="welcome-body">
+      <p class="welcome-eyebrow" id="welcomeType"></p>
+      <h1 class="welcome-name" id="welcomeName">—</h1>
+      <p class="welcome-sub" id="welcomeSub"></p>
+      <p class="welcome-msg" id="welcomeMsg"></p>
+      <button class="btn-primary btn-block" id="btnEnter">Entrar al evento</button>
+    </div>
+  </section>
+
+  <!-- ============ IDENTIFICACIÓN ============ -->
+  <section id="screen-identify" class="screen-full" hidden>
+    <div class="identify-body">
+      <p class="eyebrow">¿Cómo querés aparecer?</p>
+      <h2 class="identify-title">Decinos tu nombre</h2>
+      <input id="inputName" class="field" type="text" placeholder="Tu nombre" maxlength="40" autocomplete="off">
+      <input id="inputRelation" class="field" type="text" placeholder="Relación (opcional) — Tía, Familia Gómez…" maxlength="40" autocomplete="off">
+      <button class="btn-primary btn-block" id="btnContinue">Continuar</button>
+      <p class="identify-note">Sin contraseña, sin cuenta. Solo para que sepamos quién compartió cada recuerdo.</p>
+    </div>
+  </section>
+
+  <!-- ============ ESTADO DE ERROR ============ -->
+  <section id="screen-error" class="screen-full" hidden>
+    <div class="error-body">
+      <p class="eyebrow">Ups</p>
+      <h2 id="errorTitle">No encontramos este evento</h2>
+      <p id="errorMsg" class="muted">Revisá que el link esté completo, o pedile al anfitrión que te lo reenvíe.</p>
+    </div>
+  </section>
+
+  <!-- ============ APP PRINCIPAL ============ -->
+  <div id="app-main" hidden>
+    <header id="topbar">
+      <div class="topbar-info">
+        <span id="topbarHonoree" class="topbar-honoree">—</span>
+        <span id="topbarPhase" class="topbar-phase"></span>
+      </div>
+      <div id="topbarCountdown" class="topbar-countdown" hidden>
+        <div class="cd-unit"><b id="cdDays">00</b><span>días</span></div>
+        <div class="cd-unit"><b id="cdHours">00</b><span>hs</span></div>
+        <div class="cd-unit"><b id="cdMins">00</b><span>min</span></div>
+      </div>
+    </header>
+
+    <main id="screen-content"></main>
+
+    <button id="fabPublish" class="fab" aria-label="Compartir recuerdo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </button>
+
+    <nav id="bottom-nav">
+      <button class="nav-btn" data-route="home" aria-label="Inicio">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1H10v-6h4v6h3.5a1 1 0 0 0 1-1v-9"/></svg>
+        <span>Inicio</span>
+      </button>
+      <button class="nav-btn" data-route="info" aria-label="Evento">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 2 21h20L12 2Z"/><path d="M12 10v5"/><circle cx="12" cy="17.3" r=".4" fill="currentColor" stroke="none"/></svg>
+        <span>Evento</span>
+      </button>
+      <button class="nav-btn" data-route="album" aria-label="Recuerdos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="m21 15-5-5-9 9"/></svg>
+        <span>Recuerdos</span>
+      </button>
+      <button class="nav-btn" data-route="guests" aria-label="Invitados">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2.5 20c0-3.6 2.9-6.3 6.5-6.3s6.5 2.7 6.5 6.3"/><circle cx="17" cy="8.5" r="2.3"/><path d="M16 13.9c2.6.5 4.5 2.6 4.5 5.4"/></svg>
+        <span>Invitados</span>
+      </button>
+      <button class="nav-btn" data-route="profile" aria-label="Mi perfil">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        <span>Perfil</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ============ MODAL: PUBLICAR RECUERDO ============ -->
+  <div id="publishSheet" class="sheet-backdrop" hidden>
+    <div class="sheet">
+      <div class="sheet-grip"></div>
+      <h3 class="sheet-title">Compartir recuerdo</h3>
+
+      <div class="publish-types" id="publishTypes">
+        <button class="ptype active" data-type="photo">📷<span>Foto</span></button>
+        <button class="ptype" data-type="video">🎥<span>Video</span></button>
+        <button class="ptype" data-type="text">💬<span>Mensaje</span></button>
+      </div>
+
+      <input type="file" id="publishFile" accept="image/*" hidden>
+      <div id="publishPreview" class="publish-preview" hidden></div>
+
+      <textarea id="publishCaption" class="field textarea" placeholder="Escribí algo (opcional)…" maxlength="500"></textarea>
+
+      <button class="btn-primary btn-block" id="btnPublish">Publicar recuerdo</button>
+      <button class="btn-ghost btn-block" id="btnCancelPublish">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: COMENTARIOS ============ -->
+  <div id="commentsSheet" class="sheet-backdrop" hidden>
+    <div class="sheet sheet-tall">
+      <div class="sheet-grip"></div>
+      <h3 class="sheet-title">Comentarios</h3>
+      <div id="commentsList" class="comments-list"></div>
+      <div class="comment-input-row">
+        <input id="commentInput" class="field" style="margin-top:0;" placeholder="Escribí un comentario…" maxlength="300">
+        <button id="btnSendComment" class="btn-send" aria-label="Enviar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: REPORTAR ============ -->
+  <div id="reportSheet" class="sheet-backdrop" hidden>
+    <div class="sheet">
+      <div class="sheet-grip"></div>
+      <h3 class="sheet-title">Reportar contenido</h3>
+      <p class="muted" style="font-size:13px;margin-bottom:14px;">El anfitrión lo va a revisar. Nadie ve quién lo reportó.</p>
+      <div class="report-reasons" id="reportReasons">
+        <button class="report-reason" data-reason="Contenido inapropiado">Contenido inapropiado</button>
+        <button class="report-reason" data-reason="Spam o publicidad">Spam o publicidad</button>
+        <button class="report-reason" data-reason="No corresponde a este evento">No corresponde a este evento</button>
+        <button class="report-reason" data-reason="Otro motivo">Otro motivo</button>
+      </div>
+      <button class="btn-ghost btn-block" id="btnCancelReport">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- ============ VISOR FULLSCREEN ============ -->
+  <div id="viewer" class="viewer" hidden>
+    <button id="viewerClose" class="viewer-close" aria-label="Cerrar">✕</button>
+    <button id="viewerPrev" class="viewer-nav viewer-prev" aria-label="Anterior">‹</button>
+    <div id="viewerContent" class="viewer-content"></div>
+    <button id="viewerNext" class="viewer-nav viewer-next" aria-label="Siguiente">›</button>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
